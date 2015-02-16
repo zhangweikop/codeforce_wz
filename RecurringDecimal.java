@@ -1,19 +1,31 @@
 import java.util.ArrayList;
-import java.util.HashSet;
 
 
 public class RecurringDecimal {
-	 public String fractionToDecimal(int numerator, int denominator) {
-	     
-		 int d = numerator/denominator;
-		 int remaining = numerator%denominator;
+	public String fractionToDecimal(int numerator, int denominator)
+	{
+		return fractionToDecimalL(numerator, denominator);
+	}
+	 public String fractionToDecimalL(long numerator, long denominator) {
+	   
+	   
+		 if(numerator >0 && denominator<0)
+	     {
+	    	 return "-"+fractionToDecimalL(numerator, 0-denominator);
+	     }
+	     if(numerator <0 && denominator>0)
+	     {
+	    	 return "-"+fractionToDecimalL(0-numerator, denominator);
+	     }
+		 long d = numerator/denominator;
+		 long remaining = numerator%denominator;
 		 if(remaining == 0)
 		  {
 			 return ""+d;
 		  }
 		 int i = 0;
-		 int a = remaining;
-		 int b = denominator;
+		 long a = remaining;
+		 long b = denominator;
 		 for( i =2 ; i<=remaining/2; i++)
 		 {
 			 if(a%i ==0 && b% i==0)
@@ -23,6 +35,20 @@ public class RecurringDecimal {
 				 i--;
 			 }
 		 }
+		 
+		     if(d== Integer.MAX_VALUE)
+		     {
+		    	 return d+"";
+		     }
+		     if(d == Integer.MIN_VALUE)
+		     {
+		    	 return d+"";
+		     }
+		     if(numerator <0 && denominator<0)
+		     {
+		    	 return fractionToDecimalL(0-numerator, 0-denominator);
+		     }
+		 
 		 if(infinite(b))
 		 {
 			 try {
@@ -35,7 +61,7 @@ public class RecurringDecimal {
 		 else
 		 {
 			 String r = d+".";
-			 int f= a;
+			 long f= a;
 			 while(f!=0)
 			 {
 				 f = f * 10;
@@ -54,7 +80,7 @@ public class RecurringDecimal {
 		 }
 	    }
 	 // string = a/b < 1.0
-	 public boolean infinite(int b)
+	 public boolean infinite(long b)
 	 {
 		 while(b>1)
 		 {
@@ -72,11 +98,11 @@ public class RecurringDecimal {
 		 return false;
 	 }
 	 
-	 public String solveProblem(int a , int b) throws Exception
+	 public String solveProblem(long a , long b) throws Exception
 	 {
-		 ArrayList<Integer>  history = new ArrayList<Integer> ();  
+		 ArrayList<Long>  history = new ArrayList<Long> ();  
 		 boolean found = false;
-		 int t = a;
+		 long t = a;
 		 String r = "";
 		 while(!found)
 		 {
@@ -90,9 +116,10 @@ public class RecurringDecimal {
 				 rr+=")";
 				 return rr;
 			 }
+			 history.add(t);
+
 			 if(t>b)
 			 {
-				 history.add(t);
 				 r += t/b;
 				 t = t%b;
 			 }else{
@@ -107,12 +134,12 @@ public class RecurringDecimal {
 	 public static void main(String [] args)
 	 {
 		 RecurringDecimal R = new RecurringDecimal();
-		 System.out.println(R.fractionToDecimal(1, 2));
-		 System.out.println(R.fractionToDecimal(3, 4));
+		  System.out.println(R.fractionToDecimal(7, -12));
+	  System.out.println(R.fractionToDecimal(-2147483648, 1));
 
-		 System.out.println(R.fractionToDecimal(1, 7));
+	  System.out.println(R.fractionToDecimal(1, 90));
 
-		 System.out.println(R.fractionToDecimal(23, 15));
+	  System.out.println(R.fractionToDecimal(23, 15));
 
 	 }
 }
