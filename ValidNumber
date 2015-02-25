@@ -1,0 +1,131 @@
+public class Solution {
+    public boolean xNumber(String s)
+	   {
+		   if (s.length() <3)
+		   {
+			   return false;
+		   }
+		   if (!s.substring(0, 2).toLowerCase().equals("0x"))
+		   {
+			   return false;
+		   }
+		   for( int i =2;i<s.length(); i++)
+		   {
+			   char c =s.toUpperCase().charAt(i);
+			   if(!((c<='F' && c>= 'A')|| (c<='9' && c>='0')))
+			   {
+				   return false;
+			   }
+    	   }  
+		   return true;
+	   }
+	   public boolean pureNumber (String s)
+	   {
+		   if (s.length()<=0)
+		   {
+			   return false;
+		   }
+		   for( int i =0;i<s.length(); i++)
+		   {
+			   char c =s.charAt(i);
+
+			  if(! (c<='9' && c>='0'))
+			  {
+				  return false;
+			  }
+		   }
+		   return true;
+	   }
+	   public boolean signNumber (String s)
+	   {
+		   if(s.length()<2)
+		   {
+			   return false;
+		   }
+		   if (s.charAt(0) != '+'&& s.charAt(0) != '-')
+		   {
+			   return false;
+		   }
+		   for( int i =1 ;i<s.length(); i++)
+		   {
+			   char c =s.charAt(i);
+
+			  if(! (c<='9' && c>='0'))
+			  {
+				  return false;
+			  }
+		   }
+		   return true;
+	   }
+	   
+	   public int number(String s)
+	   {
+		   int complexity = 0;
+		   boolean valid = false;
+		   if (signNumber(s) || pureNumber(s) || xNumber(s))
+		   {
+			   return 1;
+		   }
+		   for( int i =0;i<s.length(); i++)
+		   {
+			   char c = s.charAt(i);
+			   if(c<'0' || c> '9')
+			   {
+				   if (c == '.') {
+					   if(i+1 == s.length()) 
+					    {
+						   if(pureNumber(s.substring(0, i)) || signNumber(s.substring(0, i) ))
+						   {
+								return 1;
+						   }
+						 // valid = valid || false;
+					   } else if(i==0) {
+						   if(pureNumber(s.substring(i+1, s.length() ) ) )
+							  {
+							   return 1;
+							   
+							  }
+					   }
+					   else 
+					   if(!pureNumber(s.substring(0, i)) && !signNumber(s.substring(0, i) ))
+					   {
+							//  valid = valid || false;
+					   } else 
+					   if (!pureNumber(s.substring(i+1, s.length())))
+					   {
+							//  valid = valid || false;
+
+					   } else {
+					   valid = valid || true;
+					   return 1;
+					   }
+				   }
+				   if (c == 'e' || c == 'E') {
+					 if( number(s.substring(0, i))>=0 && number(s.substring( i+1, s.length()))>=0)
+					 {
+						 return 1;
+					 } 
+				
+				   }
+				   
+			
+			   }
+			   
+			   
+		   }
+		  
+		   return -1;
+	   }
+	
+	   public boolean isNumber(String s) {
+		   s=s.trim();
+		   if(number(s)>0)
+		   {
+			   return true;
+		   }
+		   return false;
+	        
+	    }
+	
+
+}
