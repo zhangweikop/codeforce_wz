@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<style>
+		
+		
+
+		</style>
+
+	</head>
+		<body>
+				<script type="text/javascript">
+		function Node(val){ this.val = val; this.left = this.right =null;}
+
+var root = new Node(0);
+ 
+root.left = new Node(1)
+var node2 = root.left.left = new Node(2);
+var node7 = node2.left = new Node(7);
+var node9 = node2.right = new Node(9);
+node9.left= new Node(11);
+node9.right = new Node(12);
+root.right = new Node(3);
+root.right.left = new Node(4);
+root.right.right = new Node(5);
+function postOrder(root){
+if(root==null){return;}
+postOrder(root.left);
+postOrder(root.right);
+console.log(root.val);}
+
+function inOrder(root){
+if(root==null){return;}
+inOrder(root.left);
+console.log(root.val);
+inOrder(root.right);
+}
+
+function printStack(stack) {
+var s = 'length:'+stack.length+' ';
+	for(var i = stack.length-1; i>=0; i--) {
+	if(stack[i]) {
+		s+= stack[i].val;
+	} else{
+	s+= stack[i];
+	}
+       
+       s+= ',  '
+	}
+	console.log(s);
+}
+function inNon(root){
+	var stack = [];
+	var lastVisit = 12;
+	var node= root;
+	stack.push(node);
+	while(stack.length>0){
+	//printStack(stack);
+		  var peekNode = stack[stack.length-1];
+
+	//console.log('peekNode', ((typeof peekNode   === 'object') &&peekNode!=null ? peekNode.val: null))
+	  if(peekNode == null) {
+	     node = stack.pop();
+	     lastVisit = node;
+		  } else{
+		//  console.log('equal?', peekNode.right , lastVisit);
+		   if (lastVisit === null) {
+		  	node = stack.pop();
+		  	lastVisit = node;
+		  	console.log(node.val);
+		  	 stack.push(peekNode.right);
+
+
+		  } else {
+		      stack.push(peekNode.left);
+		  }
+	  }
+	}
+}
+function postNon(root){
+	var stack = [];
+	var lastVisit = 12;
+	var node= root;
+	stack.push(node);
+	while(stack.length>0){
+	//printStack(stack);
+		  var peekNode = stack[stack.length-1];
+
+	//console.log('peekNode', ((typeof peekNode   === 'object') &&peekNode!=null ? peekNode.val: null))
+	  if(peekNode == null) {
+	     node = stack.pop();
+	     lastVisit = node;
+		  } else{
+		//  console.log('equal?', peekNode.right , lastVisit);
+		   if (peekNode.right === lastVisit) {
+		  	node = stack.pop();
+		  	lastVisit = node;
+		  	console.log(node.val);
+
+		  } else {
+		      stack.push(peekNode.right);
+		      stack.push(peekNode.left);
+		  }
+	  }
+	}
+}
+//setTimeout(function(){postNon(root);}, 1000);
+
+		</script>
+		</body>
+		</html>
